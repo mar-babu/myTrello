@@ -9,7 +9,7 @@
     <div class="login-area login-s2">
         <div class="container">
             <div class="login-box ptb--100">
-                <form id="registerForm" method="POST">
+                <form id="registerForm" method="POST" action="{{ route('register') }}">
                     @csrf
                     <div class="login-form-head">
                         <h4>Sign up</h4>

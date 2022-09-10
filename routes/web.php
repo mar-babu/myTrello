@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Auth\LoginController;
+use \App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,13 @@ Route::group(['middleware' => ['guest', 'web']], function() {
     });
     Route::get('/login', [LoginController::class ,'showLoginForm'])->name('login');
     Route::get('/registration', [LoginController::class ,'showRegistrationForm'])->name('registration');
+    Route::post('/register', [LoginController::class ,'register'])->name('register');
+    Route::post('/login', [LoginController::class ,'login'])->name('loginProcess');
+
+});
+
+Route::group(['middleware' => ['auth', 'web']], function () {
+    Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 });
