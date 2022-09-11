@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id');
             $table->foreignId('user_id');
-            $table->bigInteger('invited_by_user_id');
+            $table->bigInteger('invited_by_user_id')->nullable();
             $table->timestamps();
         });
     }

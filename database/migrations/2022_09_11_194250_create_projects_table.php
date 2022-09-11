@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name');
             $table->text('description');
-            $table->double('cost', 8, 2);
+            $table->double('cost');
             $table->date('from_date');
             $table->date('to_date');
             $table->string('address');

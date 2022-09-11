@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Auth\LoginController;
 use \App\Http\Controllers\DashboardController;
+use \App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +30,8 @@ Route::group(['middleware' => ['guest', 'web']], function() {
 Route::group(['middleware' => ['auth', 'web']], function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
+    //project related route
+    Route::get('/project/index', [ProjectController::class, 'index'])->name('project.list');
+    Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
+    Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
 });

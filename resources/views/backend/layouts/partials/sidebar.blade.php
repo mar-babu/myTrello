@@ -20,12 +20,12 @@
                     </li>
 
                     <li>
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-cart-plus"></i><span>
-                            Demo 1
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-building"></i><span>
+                            Projects
                         </span></a>
                         <ul class="collapse">
-                            <li class=""><a href="">All Demo 1</a></li>
-                            <li class=""><a href="">Create Demo 1</a></li>
+                            <li class=""><a href="{{ route('project.list') }}">All Project</a></li>
+                            <li class=""><a href="{{ route('project.create') }}">Create Project</a></li>
                         </ul>
                     </li>
 
