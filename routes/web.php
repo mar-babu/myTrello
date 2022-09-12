@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Auth\LoginController;
 use \App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProjectController;
+use \App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ Route::group(['middleware' => ['guest', 'web']], function() {
     Route::post('/login', [LoginController::class ,'login'])->name('loginProcess');
 
 });
+
+Route::get('/users', [UserController::class, 'index']);
 
 Route::group(['middleware' => ['auth', 'web']], function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
