@@ -37,6 +37,37 @@
     <div class="row">
         <!-- data table start -->
         <div class="col-12 mt-5">
+            <!-- filter start -->
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Filter</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url('/project/filter') }}" method="get">
+                        <div class="row">
+                            <div class="col-2">
+                                <select class="form-control filter_column" name="filter_column">
+                                    <option selected="selected" value="">Select Column</option>
+                                    <option value="from_date">From Date</option>
+                                    <option value="to_date">To Date</option>
+                                    <option value="created_by">User</option>
+                                    <option value="workspace">Workspace</option>
+                                    <option value="name">Project Name</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" placeholder="Filter String" name="filter_string" type="text">
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-md btn-success">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- filter end -->
+
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title float-left">Products List</h4>

@@ -36,4 +36,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
     Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
     Route::get('/project/{project_id}/space', [ProjectController::class, 'projectSpace']);
     Route::post('/project/{project_id}/member', [ProjectController::class, 'makeProjectMember'])->name('project.member');
+    //project related route
+    Route::get('/project/filter', [ProjectController::class, 'filter'])->name('project.filter');;
+
 });

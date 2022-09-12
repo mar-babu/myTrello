@@ -106,4 +106,40 @@ class ProjectController extends Controller
         return view('backend.pages.project.space', compact( 'project', 'notMemberLists'));
     }
 
+    //product filter by price range, sort by, status
+    public function filter(Request $request)
+    {
+        $query = Project::query();
+        $filter_column = $request->filter_column;
+        $filter_string = $request->filter_string;
+
+        if ($filter_column == 'from_date') {
+            $query->where('from_date', $filter_string);
+        }
+
+        if ($filter_column == 'to_date') {
+            $query->where('to_date', $filter_string);
+        }
+
+        if ($filter_column == 'created_by') {
+            $query->whereHas('createdBy', function ($q) use ($filter_string) {
+                $q->where('name', 'like', '%' . $filter_string . '%');
+            });
+        }
+
+        if ($filter_column == 'workspace') {
+            $query->whereHas('workspace', function ($q) use ($filter_string) {
+                $q->where('name', 'like', '%' . $filter_string . '%');
+            });
+        }
+
+        if ($filter_column == 'name') {
+            $query->where('name', 'like', '%' . $filter_string . '%');
+        }
+
+        $projects = $query->get();
+
+        return view('backend.pages.project.index', compact('projects'));
+    }
+    
 }
