@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use App\Models\ProjectMember;
+use App\Models\User;
 use App\Models\Workspace;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
@@ -14,7 +16,10 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with('workspace', 'createdBy')->get();
+        $projects = Project::with('workspace', 'createdBy', 'projectMember')
+            ->whereHas('projectMember', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })->get();
 
         return view('backend.pages.project.index', compact('projects'));
     }
@@ -42,7 +47,7 @@ class ProjectController extends Controller
             $project->created_by = auth()->user()->id;
             $project->save();
 
-            //project member create
+            //make project member when one create project
             $projectMember = $this->userProject($project);
             $project->projectMember()->save($projectMember);
             DB::commit();
@@ -62,6 +67,43 @@ class ProjectController extends Controller
         $projectMember->user_id = auth()->user()->id;
 
         return $projectMember;
+    }
+
+    //make other member as project member
+    public function makeProjectMember(Request $request, $projectId)
+    {
+        try {
+            DB::beginTransaction();
+            $projectMember = new ProjectMember();
+            $projectMember->project_id = $projectId;
+            $projectMember->user_id = $request->user_id;
+            $projectMember->invited_by_user_id = auth()->user()->id;
+            $projectMember->save();
+
+            DB::commit();
+            return redirect('/project/' . $projectId . '/space');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    public function projectSpace($projectId)
+    {
+        $project = Project::with('workspace', 'createdBy', 'projectMember', 'projectMember.user')
+            ->whereHas('projectMember', function ($query) use ($projectId) {
+                $query->where('project_id', $projectId);
+            })->first();
+
+        $memberLists = ProjectMember::with('user')
+            ->whereHas('user', function ($query) use ($projectId) {
+                $query->where('project_id', $projectId);
+            })
+            ->pluck('user_id');
+
+        $notMemberLists = User::whereNotIn('id', $memberLists)->get();
+
+        return view('backend.pages.project.space', compact( 'project', 'notMemberLists'));
     }
 
 }

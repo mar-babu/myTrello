@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+
 @endsection
 
 
@@ -58,6 +59,7 @@
                                     <th width="14%">Address</th>
                                     <th width="5%">Status</th>
                                     <th width="10%">Created By</th>
+                                    <th width="5%">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="projectList">
@@ -77,6 +79,11 @@
                                         </span>
                                     </td>
                                    <td>{{ $project->createdBy->name }}</td>
+                                   <td>
+                                       <a href="{{ url('/project/' . $project->id . '/space') }}" class="btn btn-primary">
+                                           <span class="fa fa-rocket"></span>
+                                       </a>
+                                   </td>
                                </tr>
                                @endforeach
                             </tbody>
@@ -89,6 +96,7 @@
         
     </div>
 </div>
+
 @endsection
 
 
@@ -99,16 +107,16 @@
      <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
      <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
      <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-     
+
      <script>
-         /*================================
-        datatable active
-        ==================================*/
-        if ($('#dataTable').length) {
-            $('#dataTable').DataTable({
-                responsive: true
-            });
-        }
+     /*================================
+     datatable active
+     ==================================*/
+     if ($('#dataTable').length) {
+     $('#dataTable').DataTable({
+     responsive: true
+     });
+     }
 
      </script>
 
