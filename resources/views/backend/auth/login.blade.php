@@ -5,14 +5,6 @@
 @endsection
 
 @section('auth-content')
-    @php
-        $usersByPublicApi = \Illuminate\Support\Facades\Cache::pull('getUsers');
-    @endphp
-    @if(isset($usersByPublicApi))
-        @foreach($usersByPublicApi as $user)
-            <p> {{ $user->name }} ( {{ $user->email }} ) </p>
-        @endforeach
-    @endif
     <!-- login area start -->
     <div class="login-area login-s2">
         <div class="container">
